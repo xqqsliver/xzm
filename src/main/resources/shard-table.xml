@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rdb="http://www.dangdang.com/schema/ddframe/rdb"
+       xsi:schemaLocation="http://www.dangdang.com/schema/ddframe/rdb
+                       http://www.dangdang.com/schema/ddframe/rdb/rdb.xsd
+                       http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd" >
+
+    <!-- 配置按年月分表规则 -->
+    <rdb:strategy id="tableStrategyByMonth" sharding-columns="occur_date"  algorithm-class="com.xz.service.ShardTables"/>
+    <!-- 配置新的数据源 -->
+    <rdb:data-source id="shardingDataSource">
+        <!-- 配置分片规则，default-data-source的数据源供未分表的表使用，要求data-sources也配置该数据源 -->
+        <rdb:sharding-rule data-sources="dataSource" default-data-source="dataSource">
+            <rdb:table-rules>
+                <!-- 配置表规则  logic-table逻辑表， actual-tables实际表，table_${1..2}表示table_1,table_2,
+                  table-strategy分表策略，database-strategy分库策略 -->
+                <rdb:table-rule logic-table="order_audit_history"
+                                actual-tables="order_audit_history_${2018..2019}${['01','02','03','04','05','06','07','08','09','10','11','12']}"
+                                table-strategy="tableStrategyByMonth" />
+
+                <!--<rdb:table-rule logic-table="order_audit_task"
+                                actual-tables="order_audit_task_000${0..9},order_audit_task_00${10..63}"
+                                table-strategy="tableStrategyByUserId"/>-->
+            </rdb:table-rules>
+            <!-- 关联绑定表。 若有，可用-->
+            <!--<rdb:binding-table-rules>-->
+            <!--<rdb:binding-table-rule logic-tables=""/>-->
+            <!--</rdb:binding-table-rules>-->
+        </rdb:sharding-rule>
+        <rdb:props>
+            <prop key="sql.show">true</prop>
+        </rdb:props>
+    </rdb:data-source>
+</beans>
