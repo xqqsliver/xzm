@@ -6,4 +6,3 @@ package com.xz.service.source.model;
 public interface Observer {
     public void update(String message);
 }
-}
