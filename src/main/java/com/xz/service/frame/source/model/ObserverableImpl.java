@@ -1,4 +1,4 @@
-package com.xz.service.source.model;
+package com.xz.service.frame.source.model;
 
 import java.util.ArrayList;
 import java.util.List;

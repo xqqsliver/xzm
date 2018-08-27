@@ -1,4 +1,4 @@
-package com.xz.service.source.model;
+package com.xz.service.frame.source.model;
 
 /**
  * 观察者模式

@@ -1,4 +1,4 @@
-package com.xz.service;
+package com.xz.service.frame;
 
 import com.dangdang.ddframe.rdb.sharding.api.ShardingValue;
 import com.dangdang.ddframe.rdb.sharding.api.strategy.table.SingleKeyTableShardingAlgorithm;
