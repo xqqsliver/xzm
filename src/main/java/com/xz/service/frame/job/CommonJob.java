@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommonJob extends IJobHandler {
 
+    @Override
     public ReturnT<String> execute(String param) throws Exception {
         System.out.println("run job"+System.currentTimeMillis());
         return null;
